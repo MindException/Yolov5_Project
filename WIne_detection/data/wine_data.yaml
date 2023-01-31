@@ -1,0 +1,18 @@
+train: ./new_wine_labels_coco/train/images
+val: ./new_wine_labels_coco/valid/images
+
+# classes
+names :
+  0: wine-labels
+  1: AlcoholPercentage
+  2: Appellation AOC DOC AVARegion
+  3: Appellation QualityLevel
+  4: CountryCountry
+  5: Distinct Logo
+  6: Established YearYear
+  7: Maker-Name
+  8: Organic
+  9: Sustainable
+  10: Sweetness-Brut-SecSweetness-Brut-Sec
+  11: TypeWine Type
+  12: VintageYear
