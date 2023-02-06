@@ -1,6 +1,6 @@
 # 편의점 상품(음식) 검출 프로젝트
 
-본 프로젝트는 Yolov5를 이용하여 와인 라벨을 검출하는 프로젝트입니다.  
+본 프로젝트는 Yolov5를 이용하여 편의점 상품을 검출하는 프로젝트입니다.  
 해당 데이터는 아래의 링크에서 다운받아 사용하였습니다.  
 링크: [https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=64](https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=64)
 
