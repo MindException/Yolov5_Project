@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/product_detect.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/cerulean/bootstrap.min.css"/>
+    <!--head font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap" rel="stylesheet">
+    <title>편의점 프로젝트</title>
+</head>
+<body>
+    <header>편의점 객체 탐지 </header>
+    <side1></side1>
+    <main>
+        <center>
+        <form id = "img_section">
+        <img src="../static/msaischool.png" style="margin-top: 20px;" id = "product_image"/>
+        </form>
+        <div id = "send_section">
+            <input class="form-control" type="file"  v-on:change="image_save">
+            <button class="btn btn-lg btn-success" id="send_btn" type="button">서버 전송</button>
+            <!-- {{ 변수명 }} data에서 바인딩 -->>
+            <p id="product_detail">{{ return_text }}</p>
+        </div>
+        </center>
+    </main>
+    <side2></side2>
+    <footer>made by MS AI School 1st 7team</footer>
+
+    <!--cdn-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        let image_blob = document.getElementById("product_image");      //이미지 요소 위치
+        let file_img;   //이미지 FormData
+        let send_trigger;
+
+
+        const img_app = new Vue({
+        el: "#send_section",
+        data: {
+            return_text: '편의점 물건을 검출하여 정보를 반환합니다.'
+        },
+        methods: {
+            image_save: function (event) {
+
+                file_img = event.target.files[0]
+
+                if (file_img && file_img.type.match(/^image\/(png|jpeg)$/)) {
+                    // 이미지 변경
+                    image_blob.src = window.URL.createObjectURL(file_img)
+                    send_trigger = 0;
+                    // FormData 생성
+                    img_form = new FormData()
+                    img_form.append('test123', file_img)
+                }
+        
+            },
+
+            send_para() {
+                // 이미지 보내고 이미지랑 객체 정보 받기
+
+            },
+
+        },
+        });
+
+    </script>
+
+</body>
+</html>
