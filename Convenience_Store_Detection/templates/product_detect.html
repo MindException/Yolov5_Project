@@ -22,8 +22,8 @@
         </form>
         <div id = "send_section">
             <input class="form-control" type="file"  v-on:change="image_save">
-            <button class="btn btn-lg btn-success" id="send_btn" type="button">서버 전송</button>
-            <!-- {{ 변수명 }} data에서 바인딩 -->>
+            <button class="btn btn-lg btn-success" id="send_btn" v-on:click="send_para">서버 전송</button>
+            <!-- {{ 변수명 }} data에서 바인딩 -->
             <p id="product_detail">{{ return_text }}</p>
         </div>
         </center>
@@ -57,14 +57,47 @@
                     send_trigger = 0;
                     // FormData 생성
                     img_form = new FormData()
-                    img_form.append('test123', file_img)
+                    img_form.append('product_img', file_img)
                 }
         
             },
 
             send_para() {
                 // 이미지 보내고 이미지랑 객체 정보 받기
+                if (send_trigger == 0){
+                    //이미지를 보낸적이 없는 경우만 가능하다.
+                    axios.post('http://localhost:8123/product_detect/', img_form, {
+                        responseType: 'blob'
+                    })
+                    .then((resp, failed) => {
+                        
+                        header_type = resp.headers["content-type"]
+                        console.log(header_type)
 
+                        if (header_type === "application/json"){
+                            // 객체 겁색에 실패함
+                            console.log("실패")
+
+                        }else{
+
+                            //이미지 바꿈
+                            image_blob.src = window.URL.createObjectURL(resp.data);
+                            
+                            //나머지 텍스트를 가져온다.
+                            axios.post('http://localhost:8123/product_detect/text', img_form)
+                            .then((resp, failed) => {
+                                console.log(resp)
+                            })
+                        }
+                    })
+                    .catch((error) => {
+                        alert("전송 실패");
+                    });
+
+
+                }else{
+                    alert("이미 서버에 전송된 사진입니다.")
+                }
             },
 
         },
