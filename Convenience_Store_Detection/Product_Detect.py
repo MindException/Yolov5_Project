@@ -53,18 +53,19 @@ user_name = 'root'
 user_password = '1234'                     # <-------- 이거 비번 저랑 다르시면 수정 필요해요
 database_name = 'product_detection'
 
-detect_db = pymysql.connect( 
-    host = host_name,
-    port = port,
-    user = user_name,
-    passwd = user_password,
-    db = database_name,
-    charset = 'utf8'
-)
-
-cursor = detect_db.cursor()
-
 def detect_inference(img_path):
+
+    # DB 세팅
+    detect_db = pymysql.connect( 
+        host = host_name,
+        port = port,
+        user = user_name,
+        passwd = user_password,
+        db = database_name,
+        charset = 'utf8'
+    )
+
+    cursor = detect_db.cursor()
 
     result_dict = {"result" : "true"}
     img = cv2.imread(img_path)
@@ -91,9 +92,19 @@ def detect_inference(img_path):
             result_pd = detail_detact.pandas().xyxy[0]
 
             if result_pd.empty == False:
+                # 라벨 조회
+                SQL = 'SELECT item_no FROM label WHERE div_l_no = ' + str(detail_trigger) + " AND div_n_no = " + str(int(result_pd.loc[0, ['class']].item())) 
+                cursor.execute(SQL)
+                prodcut_labels = cursor.fetchall()
+                prodcut_label = prodcut_labels[0][0]
+                # 50013 :  <class 'int'>
+
                 # 데이터베이스 입력
                 sql_image = "INSERT INTO image (img_name, label_no) VALUES (%s, %s)"
-                cursor.execute(sql_image, (img_path, result_pd.loc[0, ['class']].item()))
+                print(result_pd.loc[0, ['class']].item())
+                img_name = img_path.split("/")[2]
+                img_name = img_name.split(".")[0]
+                cursor.execute(sql_image, (img_name, prodcut_label))
                 detect_db.commit()
                 detect_db.close()
 
@@ -118,9 +129,19 @@ def detect_inference(img_path):
 
             print("1,2,4 번 라벨 들어옴")
             if result_pd.empty == False:
+                # 라벨 조회
+                SQL = 'SELECT item_no FROM label WHERE div_l_no = ' + str(detail_trigger) + " AND div_n_no = " + str(int(result_pd.loc[0, ['class']].item())) 
+                cursor.execute(SQL)
+                prodcut_labels = cursor.fetchall()
+                prodcut_label = prodcut_labels[0][0]
+                # 50013 :  <class 'int'>
+
                 # 데이터베이스 입력
                 sql_image = "INSERT INTO image (img_name, label_no) VALUES (%s, %s)"
-                cursor.execute(sql_image, (img_path, result_pd.loc[0, ['class']].item()))
+                print(result_pd.loc[0, ['class']].item())
+                img_name = img_path.split("/")[2]
+                img_name = img_name.split(".")[0]
+                cursor.execute(sql_image, (img_name, prodcut_label))
                 detect_db.commit()
                 detect_db.close()
 
@@ -145,9 +166,19 @@ def detect_inference(img_path):
             result_pd = detail_detact.pandas().xyxy[0]
 
             if result_pd.empty == False:
+                # 라벨 조회
+                SQL = 'SELECT item_no FROM label WHERE div_l_no = ' + str(detail_trigger) + " AND div_n_no = " + str(int(result_pd.loc[0, ['class']].item())) 
+                cursor.execute(SQL)
+                prodcut_labels = cursor.fetchall()
+                prodcut_label = prodcut_labels[0][0]
+                # 50013 :  <class 'int'>
+
                 # 데이터베이스 입력
                 sql_image = "INSERT INTO image (img_name, label_no) VALUES (%s, %s)"
-                cursor.execute(sql_image, (img_path, result_pd.loc[0, ['class']].item()))
+                print(result_pd.loc[0, ['class']].item())
+                img_name = img_path.split("/")[2]
+                img_name = img_name.split(".")[0]
+                cursor.execute(sql_image, (img_name, prodcut_label))
                 detect_db.commit()
                 detect_db.close()
 
@@ -172,10 +203,19 @@ def detect_inference(img_path):
             result_pd = detail_detact.pandas().xyxy[0]
 
             if result_pd.empty == False:
+                # 라벨 조회
+                SQL = 'SELECT item_no FROM label WHERE div_l_no = ' + str(detail_trigger) + " AND div_n_no = " + str(int(result_pd.loc[0, ['class']].item())) 
+                cursor.execute(SQL)
+                prodcut_labels = cursor.fetchall()
+                prodcut_label = prodcut_labels[0][0]
+                # 50013 :  <class 'int'>
+
                 # 데이터베이스 입력
                 sql_image = "INSERT INTO image (img_name, label_no) VALUES (%s, %s)"
                 print(result_pd.loc[0, ['class']].item())
-                cursor.execute(sql_image, (img_path, result_pd.loc[0, ['class']].item()))
+                img_name = img_path.split("/")[2]
+                img_name = img_name.split(".")[0]
+                cursor.execute(sql_image, (img_name, prodcut_label))
                 detect_db.commit()
                 detect_db.close()
 
@@ -200,9 +240,19 @@ def detect_inference(img_path):
             result_pd = detail_detact.pandas().xyxy[0]
 
             if result_pd.empty == False:
+                # 라벨 조회
+                SQL = 'SELECT item_no FROM label WHERE div_l_no = ' + str(detail_trigger) + " AND div_n_no = " + str(int(result_pd.loc[0, ['class']].item())) 
+                cursor.execute(SQL)
+                prodcut_labels = cursor.fetchall()
+                prodcut_label = prodcut_labels[0][0]
+                # 50013 :  <class 'int'>
+
                 # 데이터베이스 입력
                 sql_image = "INSERT INTO image (img_name, label_no) VALUES (%s, %s)"
-                cursor.execute(sql_image, (img_path, result_pd.loc[0, ['class']].item()))
+                print(result_pd.loc[0, ['class']].item())
+                img_name = img_path.split("/")[2]
+                img_name = img_name.split(".")[0]
+                cursor.execute(sql_image, (img_name, prodcut_label))
                 detect_db.commit()
                 detect_db.close()
 
@@ -228,9 +278,19 @@ def detect_inference(img_path):
             print(result_pd)
 
             if result_pd.empty == False:
+                # 라벨 조회
+                SQL = 'SELECT item_no FROM label WHERE div_l_no = ' + str(detail_trigger) + " AND div_n_no = " + str(int(result_pd.loc[0, ['class']].item())) 
+                cursor.execute(SQL)
+                prodcut_labels = cursor.fetchall()
+                prodcut_label = prodcut_labels[0][0]
+                # 50013 :  <class 'int'>
+
                 # 데이터베이스 입력
                 sql_image = "INSERT INTO image (img_name, label_no) VALUES (%s, %s)"
-                cursor.execute(sql_image, (img_path, result_pd.loc[0, ['class']].item()))
+                print(result_pd.loc[0, ['class']].item())
+                img_name = img_path.split("/")[2]
+                img_name = img_name.split(".")[0]
+                cursor.execute(sql_image, (img_name, prodcut_label))
                 detect_db.commit()
                 detect_db.close()
 
@@ -256,9 +316,19 @@ def detect_inference(img_path):
             result_pd = detail_detact.pandas().xyxy[0]
 
             if result_pd.empty == False:
+                # 라벨 조회
+                SQL = 'SELECT item_no FROM label WHERE div_l_no = ' + str(detail_trigger) + " AND div_n_no = " + str(int(result_pd.loc[0, ['class']].item())) 
+                cursor.execute(SQL)
+                prodcut_labels = cursor.fetchall()
+                prodcut_label = prodcut_labels[0][0]
+                # 50013 :  <class 'int'>
+
                 # 데이터베이스 입력
                 sql_image = "INSERT INTO image (img_name, label_no) VALUES (%s, %s)"
-                cursor.execute(sql_image, (img_path, result_pd.loc[0, ['class']].item()))
+                print(result_pd.loc[0, ['class']].item())
+                img_name = img_path.split("/")[2]
+                img_name = img_name.split(".")[0]
+                cursor.execute(sql_image, (img_name, prodcut_label))
                 detect_db.commit()
                 detect_db.close()
 
@@ -299,11 +369,55 @@ def detect():
             return jsonify(dict)
         else:
             # 객체 탐지 성공
-            return send_file(path, mimetype='image/png')
+            # attachment_filename이  download_name으로 변경
+            response = send_file(path, mimetype='image/jpg' ,  download_name = tm[0] + tm[1]  + ".jpg")
+
+            # 헤더에 파일 이미지 이름을 같이 넣어서 보낸다.
+            response.headers["x-filename"] = tm[0] + tm[1]  + ".jpg"
+            response.headers["Access-Control-Expose-Headers"] = 'x-filename'
+
+            return response
 
 @bp.route("/text", methods=['GET','POST'])
 def detect_text():
     # 여기서 json 파일 값을 전해준다.
     # DB 구현 영역
-     data = {'file' : 'jsontest', 'text' : 'hi! jsontest!'}
-     return jsonify(data)
+
+    if request.method == "POST":
+        params = request.get_json()
+        img_name = params["img_name"].split(".")[0]
+
+        # DB 세팅
+        detect_db = pymysql.connect( 
+            host = host_name,
+            port = port,
+            user = user_name,
+            passwd = user_password,
+            db = database_name,
+            charset = 'utf8'
+        )
+
+        cursor = detect_db.cursor()
+
+        imageSQL = 'SELECT label_no FROM image WHERE img_name = ' + img_name
+        cursor.execute(imageSQL)
+        prodcut_labels = cursor.fetchall()
+        prodcut_label = prodcut_labels[0][0]
+
+        labelSQL = 'SELECT * FROM label WHERE item_no = ' + str(prodcut_label)
+        cursor.execute(labelSQL)
+        product_info = cursor.fetchone()
+        detect_db.close()
+
+        barcd = product_info[1]
+        prod_nm = product_info[2]
+        volume = product_info[5]
+        nutrition_info = product_info[6]
+
+        print(barcd)
+        print(prod_nm)
+        print(volume)
+        print(nutrition_info)
+
+    data = {'barcd' : barcd, 'prod_nm' : prod_nm, 'volume' : volume, 'nutrition_info' : nutrition_info}
+    return jsonify(data)

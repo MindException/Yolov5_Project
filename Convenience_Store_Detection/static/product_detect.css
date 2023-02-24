@@ -52,6 +52,7 @@ side2 {
     margin: 0;
     display: grid;
     margin-top: 20px;
+    margin-bottom: 30px;
     grid-gap: 1rem;
     grid-template-columns: auto auto;
     grid-template-rows: auto 300px;

@@ -23,8 +23,7 @@
         <div id = "send_section">
             <input class="form-control" type="file"  v-on:change="image_save">
             <button class="btn btn-lg btn-success" id="send_btn" v-on:click="send_para">서버 전송</button>
-            <!-- {{ 변수명 }} data에서 바인딩 -->
-            <p id="product_detail">{{ return_text }}</p>
+            <p id="product_detail">편의점 물건을 검출하여 정보를 반환합니다.</p>
         </div>
         </center>
     </main>
@@ -32,6 +31,7 @@
     <footer>made by MS AI School 1st 7team</footer>
 
     <!--cdn-->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -40,15 +40,11 @@
         let file_img;   //이미지 FormData
         let send_trigger;
 
-
         const img_app = new Vue({
         el: "#send_section",
-        data: {
-            return_text: '편의점 물건을 검출하여 정보를 반환합니다.'
-        },
         methods: {
             image_save: function (event) {
-
+                
                 file_img = event.target.files[0]
 
                 if (file_img && file_img.type.match(/^image\/(png|jpeg)$/)) {
@@ -71,22 +67,45 @@
                     })
                     .then((resp, failed) => {
                         
+                        // json 파일이 넘어오면 실패이다.
                         header_type = resp.headers["content-type"]
-                        console.log(header_type)
 
                         if (header_type === "application/json"){
                             // 객체 겁색에 실패함
-                            console.log("실패")
+                            alert("전송 실패");
 
                         }else{
+                            
+
+                            
+                            headers_img_name = resp.headers["x-filename"]
+                            let data = {
+                                img_name : headers_img_name
+                            }
 
                             //이미지 바꿈
                             image_blob.src = window.URL.createObjectURL(resp.data);
                             
                             //나머지 텍스트를 가져온다.
-                            axios.post('http://localhost:8123/product_detect/text', img_form)
-                            .then((resp, failed) => {
-                                console.log(resp)
+                            axios.post('http://localhost:8123/product_detect/text', JSON.stringify(data), {
+                            headers: {
+                                "Content-Type": `application/json`,
+                            },
+                            })
+                            .then((response, failed) => {
+                                console.log(response.data)
+                                send_trigger = 1;
+                                
+                                // .text( ) 를 사용하여 안에 내용 변경
+                                // .html( ) 를 사용하여 안에 html 내용 변경
+                                img_text = $("#product_detail");
+                                
+                                product_name = "상품명: " + response.data["prod_nm"] + "<br>";
+                                product_barcd = "바코드: " + response.data["barcd"] + "<br>";
+                                product_volume = "용량: " + response.data["volume"] + "<br>";
+                                product_nutrition_info = "영양정보 " + "<br> " + response.data["nutrition_info"] + "<br>";
+                                //img_text.text(product_name)
+                                img_text.html(product_name + product_barcd + product_volume + product_nutrition_info)
                             })
                         }
                     })
