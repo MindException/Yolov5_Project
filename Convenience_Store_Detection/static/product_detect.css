@@ -15,7 +15,7 @@ body {
 }
 
 header {
-    background-color: #FFD4D4;
+    background-color: #181823;
     color: white;
     font-size: 80px;
     text-align: center;
@@ -25,11 +25,11 @@ header {
 
 main {
     grid-area: main;
-    background-color: #FFFFE8;
+    background-color: #537FE7;
 }
 
 footer {
-    background-color: #CDE990;
+    background-color: #C0EEF2;
     font-size: 40px;
     text-align: center;
     grid-area: footer;
@@ -37,12 +37,12 @@ footer {
 }
 
 side1 {
-    background-color: #FFFFE8;
+    background-color: #537FE7;
     grid-area: side1;
 }
 
 side2 {
-    background-color: #FFFFE8;
+    background-color: #537FE7;
     grid-area: side2;
 }
 
