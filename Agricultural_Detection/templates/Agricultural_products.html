@@ -4,24 +4,73 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Agricultural_products.css"/>
+    <link rel="stylesheet" href="../static/Agricultural_products.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/cerulean/bootstrap.min.css"/>
-    <title>Document</title>
+    <title>7팀 농산물 프로젝트</title>
 </head>
 <body>
     
     <header></header>
     <div class="price_table"></div>
-    <img class="ac_img" src="drag.png"></img>
+    <!-- <img class="ac_img" src="../static/drag.png" id="img_id"></img> -->
+    <div class="ac_img" id="img_id"></div>
     <div class="price_graph"></div>
     <div class="predict_price"></div>
     <footer></footer>
 
     <!--cdn-->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
+    <script>
+
+        let image_blob = document.getElementById("img_id");
+
+        $(function() {
+        var dropzone = $('.ac_img');
+
+        dropzone.on('dragover', function() {
+            dropzone.addClass('hover');
+            return false;
+        });
+
+        dropzone.on('dragleave', function() {
+            dropzone.removeClass('hover');
+            return false;
+        });
+
+        dropzone.on('drop', function(e) {
+            e.preventDefault();
+            dropzone.removeClass('hover');
+
+            // 파일 저장
+            var files = e.originalEvent.dataTransfer.files;
+            var imageType = /^image\//;
+            let file = files[0]
+
+            // 파일이 이미지일 경우
+            if(imageType.test(file.type)){
+
+                console.log("drop")
+                
+                //이미지 변경
+                image_url = window.URL.createObjectURL(file)
+                image_blob.style.backgroundImage = `url(${image_url})`
+                image_blob.style.backgroundSize = "contain"
+                image_blob.style.backgroundColor = "#FFFFFF"
+                
+                // FormData 생성
+                img_form = new FormData()
+                img_form.append('product_img', file)
+
+                //axios 통신
+
+            }
+
+        });
+        });
+    </script>
 
 </body>
 </html>

@@ -6,7 +6,7 @@ body {
     display: grid;
     background-color: #CDE990;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 100px auto auto 50px;
+    grid-template-rows: 100px 42% 42% auto;
     grid-template-areas: 
     'header header header'
     'price_table price_table ac_img'
@@ -16,7 +16,7 @@ body {
 }
 
 header {
-    background-color: red;
+    background-color: #7D6E83;
     color: white;
     font-size: 80px;
     text-align: center;
@@ -25,19 +25,20 @@ header {
 }
 
 .price_table {
-    background-color: green;
+    background-color: #DFD3C3;
     color: white;
     font-size: 80px;
     text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;
-    margin-left: 40px;
+    margin-left: 20px;
     margin-right: 40px;
     grid-area: price_table;
 }
 
+/* 
 .ac_img { 
-    background-color: greenyellow;
+    background-color: #DFD3C3;
     color: white;
     font-size: 80px;
     text-align: center;
@@ -45,36 +46,57 @@ header {
     margin-bottom: 30px;
     margin-left: 40px;
     margin-right: 40px;
-    grid-area: ac_img;
-}
 
-.price_graph {
-    background-color: blue;
+    object-fit: cover;
+    width: 83%;
+    height: 83%;
+
+    background-attachment: fixed;
+    background-size: cover;
+} 
+*/
+
+.ac_img { 
+    background-color: #DFD3C3;
     color: white;
     font-size: 80px;
     text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;
-    margin-left: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-image: url("../static/drag.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.price_graph {
+    background-color: #F8EDE3;
+    color: white;
+    font-size: 80px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 20px;
     margin-right: 40px;
     grid-area: price_graph;
 }
 
 .predict_price {
-    background-color: blueviolet;
+    background-color: #F8EDE3;
     color: white;
     font-size: 80px;
     text-align: center;
     margin-top: 30px;
     margin-bottom: 30px;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
     grid-area: predict_price;
 }
 
 footer {
 
-    background-color: orange;
+    background-color: #D0B8A8;
     color: white;
     font-size: 80px;
     text-align: center;
