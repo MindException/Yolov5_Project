@@ -12,13 +12,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Noto+Sans+KR:wght@700&family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
 
 
     <title>7팀 농산물 프로젝트</title>
 </head>
 <body>
     
-    <header>7 team</header>
+    <header>MS AI School 7 team</header>
     <div class="price_graph">
         <div id="myChart">
 
@@ -27,7 +28,7 @@
     <div class="price_table" id = "table-container"></div>
     <div class="new_place">
         <div class="ac_img" id="img_id"></div>
-        <div class="predict_price"></div>
+        <div class="predict_price">농산물 검출 및 가격 예측 프로젝트</div>
     </div>
     
 
@@ -112,18 +113,26 @@
                                 delimiter: ",",
                                 newline: "\n",
                                 complete: function(results) {
+
+                                    // 이전에 생성된 테이블을 찾아서 삭제
+                                    var oldTable = document.querySelector(".table");
+                                    if (oldTable) {
+                                    oldTable.remove();
+                                    }
+
                                     var table = document.createElement("table");
                                     table.classList.add("table");
 
                                     // 테이블 헤더 생성
                                     var header = table.createTHead();
                                     var headerRow = header.insertRow(0);
-                                    console.log(results.data[0])
                                     var headers = Object.keys(results.data[0]);
-                                    console.log(headers)
+                                    delete headers[0]; // 0번 헤더 삭제
                                     headers.forEach(function(headerText) {
                                     var headerCell = document.createElement("th");
                                     headerCell.textContent = headerText;
+                                    headerCell.style.backgroundColor = "#425F57"; // 헤더 셀의 배경색 지정
+                                    headerCell.style.color = "white";
                                     headerRow.appendChild(headerCell);
                                     });
 
@@ -131,9 +140,22 @@
                                     var body = table.createTBody();
                                     results.data.forEach(function(rowData) {
                                     var row = body.insertRow(-1);
-                                    headers.forEach(function(header) {
+                                    headers.forEach(function(header, index) {
                                         var cell = row.insertCell(-1);
                                         cell.textContent = rowData[header];
+                                        if (index === 1) { // 첫 번째 열의 셀만 색상을 변경
+                                            cell.style.backgroundColor = "#425F57";
+                                            cell.style.color = "white";
+                                        }
+                                        if (index === 2) { // 두 번째 열의 셀만 색상을 변경
+                                            cell.style.backgroundColor = "#83BD75";
+                                        }
+                                        if (index === 3) { // 세 번째 열의 셀만 색상을 변경
+                                            cell.style.backgroundColor = "#B4E197";
+                                        }
+                                        if (index === 4) { // 네 번째 열의 셀만 색상을 변경
+                                            cell.style.backgroundColor = "#E9EFC0";
+                                        }
                                     });
                                     });
 
@@ -144,9 +166,18 @@
                                     table.style.fontSize = "20px";
 
                                     // 결과를 특정 요소에 추가
-                                    tc = document.getElementById("table-container")
-                                    tc.style.overflow = "auto";
+                                    var tc = document.getElementById("table-container")
                                     tc.appendChild(table);
+                                    tc.style.overflow = "auto";
+                                    tc.style.backgroundImage = 'none';
+
+
+                                    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 딕션어리 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+                                    agricultrual_dict_yoon = {
+                                        'chinese-cabbage' : '배추', 'onion' : '양파', 'green-lettuce' : '청상추', 'radish' : '무', 'tomato' : '토마토', 'garlic' : '마늘',
+                                        'greenonion' : '대파', 'cabbage' : '양배추', 'spinach' : '시금치', 'carrot' : '당근', 'paprica' : '파프리카', 'mushroom' : '팽이버섯',
+                                        ' young-squash' : '애호박' , 'grape' : '포도'
+                                    }
 
 
                                     //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 그래프 그리기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -187,16 +218,13 @@
                                         },
                                         title: {
                                             left: 'center',
-                                            text: 'Large Area Chart'
+                                            text: agricultrual_dict_yoon[dict["label"]] + "의 가격 변동",
+                                            textStyle: {
+                                                fontFamily: 'Oswald sans-serif',
+                                                fontSize: 30
+                                            }
                                         },
                                         toolbox: {
-                                            // feature: {
-                                            // dataZoom: {
-                                            //     yAxisIndex: 'none'
-                                            // },
-                                            // restore: {},
-                                            // saveAsImage: {}
-                                            // }
                                             show: false,
                                         },
                                         xAxis: {
@@ -267,6 +295,9 @@
                                     console.log(lastRow)
 
                                     var textg = "다음 날의 예상 가격은 " + lastRow + "원 입니다."
+                                    $(document).ready(function() {
+                                        $('.predict_price').text(textg);
+                                    });
                                     
 
 
