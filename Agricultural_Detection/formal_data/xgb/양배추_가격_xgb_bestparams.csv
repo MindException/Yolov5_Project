@@ -1,0 +1,2 @@
+﻿,eval_metric,learning_rate,max_depth,min_child_weight,n_estimators,MAE
+0,mae,0.01,5,1,500,101.11835007152266

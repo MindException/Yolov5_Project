@@ -1,0 +1,2 @@
+﻿,max_depth,min_samples_leaf,min_samples_split,n_estimators,n_jobs,MAE
+0,5,1,16,100,-1,49.63388481394408
