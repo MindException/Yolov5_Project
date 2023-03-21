@@ -9,7 +9,7 @@
 |chinese-cabbage|onion|green-lettuce|radish|tomato|garlic|greenonion|cabbage|spinach|carrot|paprica|mushroom|young-squash|grape|
 
 ## 시스템 구성도
-(작성예정)
+![](./md_img/system.png)
 
 ## 프로젝트 구현 이미지
 ![./md_img/img1.jpg](./md_img/img1.jpg)
